@@ -8,10 +8,12 @@ const connectDB = async () => {
       useUnifiedTopology: true,
       serverSelectionTimeoutMS: 10000, // 10s timeout
     });
-    console.log("✅ MongoDB Connected");
+    console.log("MongoDB Connected");
   } catch (err) {
-    console.error("❌ MongoDB Connection Failed:", err.message);
+    console.error("MongoDB Connection Failed:", err.message);
   }
 };
+
+
 
 module.exports = connectDB;

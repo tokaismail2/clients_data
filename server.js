@@ -35,6 +35,19 @@ app.get("/", (req, res) => {
   res.json({ message: "API is working on Vercel" });
 });
 
+app.get("/api/debug-db", async (req, res) => {
+  try {
+    const mongoose = require("mongoose");
+    res.json({
+      readyState: mongoose.connection.readyState, // 1 = connected
+      host: mongoose.connection.host,
+      name: mongoose.connection.name,
+    });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
 const connectDB = require("./config/db");
 connectDB();
 
@@ -45,6 +58,7 @@ if (process.env.NODE_ENV !== "production") {
     console.log(`Server started on port ${PORT}`);
   });
 }
+
 
 // Handle unhandled rejections
 process.on("unhandledRejection", (err) => {

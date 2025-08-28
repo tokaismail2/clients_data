@@ -5,25 +5,12 @@ const { sendEmail } = require('./utils/sendEmail');
 const data = async (req, res) => {
   try {
     const { email, phone, name, note } = req.body;
-
     if (!name || !email || !phone) {
       return res.status(404).json({
         success: false,
         message: "name, email, phone are required",
       });
     }
-
-    const user = await User.findOne({
-      $or: [{ email: email }, { phone: phone }],
-    });
-
-    if (user) {
-      return res.status(400).json({
-        success: false,
-        message: "Email or phone already used",
-      });
-    }
-
     const newUser = new User({
       name,
       email,
@@ -44,7 +31,7 @@ const data = async (req, res) => {
     
       await sendEmail({
         to: process.env.COMPANY_ACCOUNT, 
-        subject: "New User Registration",
+        subject: "New User send email",
         message: `
 A new user has registered:
 
