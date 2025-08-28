@@ -54,4 +54,6 @@ process.on("unhandledRejection", (err) => {
 });
 
 // Export for Vercel
-module.exports = app;
+module.exports = (req, res) => {
+  app(req, res);
+};
